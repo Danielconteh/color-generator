@@ -1,2 +1,3 @@
-#The color generator build using javascript
+#ColorGenerator
+build using javascript
 build by Danico
