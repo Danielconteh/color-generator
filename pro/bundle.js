@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -71,27 +71,125 @@
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+// SELECTING ITEMS FROM THE DOM
+const selectedItemsFromTheDom = () => {
+  return {
+    container: document.querySelector('.colorContainer'),
+    submitBtn: document.querySelector('.btnSubmit'),
+    randomBtn: document.querySelector('.randomBtn'),
+    spinner: document.querySelector('.spinner'),
+    inputValue: document.querySelector('.inputValue'),
+    showCopyTo: document.querySelector('.copyText'),
+  }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = selectedItemsFromTheDom;
+
+
+// RANDOM NUMBER GENERATOR
+const randomNumber = () =>
+  Math.floor(Math.random() * randomColor.length - 1)
+/* harmony export (immutable) */ __webpack_exports__["c"] = randomNumber;
+
+
+// A RANDOM COLOR LIST
 const randomColor = [
   'Tomato',
+  'red',
+  'orangered',
   'Orange',
   'DodgerBlue',
   'MediumSeaGreen',
-  'Gray',
   'SlateBlue',
   'Violet',
-  'LightGray',
   'Crimson',
   'Chocolate',
   'Coral',
   'DarkRed',
+  'Aquamarine',
+  'Aqua',
+  'Bisque',
+  'Blue',
+  'BlueViolet',
+  'Brown',
+  'BurlyWood',
+  'DarkBlue',
+  'DarkGoldenRod',
+  'DarkCyan',
+  'DarkMagenta',
+  'DarkOliveGreen',
+  'DarkOrange',
+  'DarkSlateBlue',
+  'DeepPink',
+  'DarkViolet',
+  'DarkTurquoise',
+  'FireBrick',
+  'DodgerBlue',
+  'Indigo',
+  'IndianRed',
+  'LightCoral',
+  'MidnightBlue',
+  'Navy',
+  'teal',
 ]
-/* harmony export (immutable) */ __webpack_exports__["a"] = randomColor;
+/* harmony export (immutable) */ __webpack_exports__["b"] = randomColor;
 
-console.log('another')
 
 
 /***/ }),
 /* 1 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["b"] = displayColorToTheDom;
+// ITEM READY TO DISPLAY TO THE DOM
+const domItems = (rgb, hex, type) => {
+  return `<div id= 'color-box' class='hex' style='background-color:rgb(${rgb.join()})'>
+        <div class='time' style="color:${
+          type != 'tint' ? 'white' : 'black'
+        }">#${hex}</div>
+        </div>`
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = domItems;
+
+
+// #####  this function display the item to the DOM &
+// ----- And add event to each to get the tex
+
+function displayColorToTheDom(
+  code,
+  html,
+  randomBtn,
+  container,
+  spinner,
+  inputValue,
+  showCopyTo
+) {
+  // THE CODE ABOVE IN THE FUNCTION ARE VARIABLE PASSDOWN ✔ TO USE
+
+  return () => {
+    randomBtn.style.background = `${code}`
+    container.insertAdjacentHTML('beforeend', html.join(' '))
+    spinner.classList.add('activeSpinner')
+    inputValue.value = ''
+    randomBtn.disabled = false
+
+    // COPY FUNCTIONALITIES
+    Array.from(document.querySelectorAll('.hex')).map((el, i) => {
+      el.addEventListener('click', async () => {
+        const b = document.querySelectorAll('.time')[i].textContent
+        await navigator.clipboard.writeText(b)
+        showCopyTo.classList.add('show')
+        setTimeout(() => {
+          showCopyTo.classList.remove('show')
+        }, 1500)
+      })
+    })
+  }
+}
+
+
+/***/ }),
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 !function(e,r){ true?module.exports=r():"function"==typeof define&&define.amd?define(r):(e=e||self).Values=r()}(this,(function(){"use strict";var e={aliceblue:[240,248,255],antiquewhite:[250,235,215],aqua:[0,255,255],aquamarine:[127,255,212],azure:[240,255,255],beige:[245,245,220],bisque:[255,228,196],black:[0,0,0],blanchedalmond:[255,235,205],blue:[0,0,255],blueviolet:[138,43,226],brown:[165,42,42],burlywood:[222,184,135],cadetblue:[95,158,160],chartreuse:[127,255,0],chocolate:[210,105,30],coral:[255,127,80],cornflowerblue:[100,149,237],cornsilk:[255,248,220],crimson:[220,20,60],cyan:[0,255,255],darkblue:[0,0,139],darkcyan:[0,139,139],darkgoldenrod:[184,134,11],darkgray:[169,169,169],darkgreen:[0,100,0],darkgrey:[169,169,169],darkkhaki:[189,183,107],darkmagenta:[139,0,139],darkolivegreen:[85,107,47],darkorange:[255,140,0],darkorchid:[153,50,204],darkred:[139,0,0],darksalmon:[233,150,122],darkseagreen:[143,188,143],darkslateblue:[72,61,139],darkslategray:[47,79,79],darkslategrey:[47,79,79],darkturquoise:[0,206,209],darkviolet:[148,0,211],deeppink:[255,20,147],deepskyblue:[0,191,255],dimgray:[105,105,105],dimgrey:[105,105,105],dodgerblue:[30,144,255],firebrick:[178,34,34],floralwhite:[255,250,240],forestgreen:[34,139,34],fuchsia:[255,0,255],gainsboro:[220,220,220],ghostwhite:[248,248,255],gold:[255,215,0],goldenrod:[218,165,32],gray:[128,128,128],green:[0,128,0],greenyellow:[173,255,47],grey:[128,128,128],honeydew:[240,255,240],hotpink:[255,105,180],indianred:[205,92,92],indigo:[75,0,130],ivory:[255,255,240],khaki:[240,230,140],lavender:[230,230,250],lavenderblush:[255,240,245],lawngreen:[124,252,0],lemonchiffon:[255,250,205],lightblue:[173,216,230],lightcoral:[240,128,128],lightcyan:[224,255,255],lightgoldenrodyellow:[250,250,210],lightgray:[211,211,211],lightgreen:[144,238,144],lightgrey:[211,211,211],lightpink:[255,182,193],lightsalmon:[255,160,122],lightseagreen:[32,178,170],lightskyblue:[135,206,250],lightslategray:[119,136,153],lightslategrey:[119,136,153],lightsteelblue:[176,196,222],lightyellow:[255,255,224],lime:[0,255,0],limegreen:[50,205,50],linen:[250,240,230],magenta:[255,0,255],maroon:[128,0,0],mediumaquamarine:[102,205,170],mediumblue:[0,0,205],mediumorchid:[186,85,211],mediumpurple:[147,112,219],mediumseagreen:[60,179,113],mediumslateblue:[123,104,238],mediumspringgreen:[0,250,154],mediumturquoise:[72,209,204],mediumvioletred:[199,21,133],midnightblue:[25,25,112],mintcream:[245,255,250],mistyrose:[255,228,225],moccasin:[255,228,181],navajowhite:[255,222,173],navy:[0,0,128],oldlace:[253,245,230],olive:[128,128,0],olivedrab:[107,142,35],orange:[255,165,0],orangered:[255,69,0],orchid:[218,112,214],palegoldenrod:[238,232,170],palegreen:[152,251,152],paleturquoise:[175,238,238],palevioletred:[219,112,147],papayawhip:[255,239,213],peachpuff:[255,218,185],peru:[205,133,63],pink:[255,192,203],plum:[221,160,221],powderblue:[176,224,230],purple:[128,0,128],rebeccapurple:[102,51,153],red:[255,0,0],rosybrown:[188,143,143],royalblue:[65,105,225],saddlebrown:[139,69,19],salmon:[250,128,114],sandybrown:[244,164,96],seagreen:[46,139,87],seashell:[255,245,238],sienna:[160,82,45],silver:[192,192,192],skyblue:[135,206,235],slateblue:[106,90,205],slategray:[112,128,144],slategrey:[112,128,144],snow:[255,250,250],springgreen:[0,255,127],steelblue:[70,130,180],tan:[210,180,140],teal:[0,128,128],thistle:[216,191,216],tomato:[255,99,71],turquoise:[64,224,208],violet:[238,130,238],wheat:[245,222,179],white:[255,255,255],whitesmoke:[245,245,245],yellow:[255,255,0],yellowgreen:[154,205,50]},r=new RegExp("[^#a-f\\d]","gi"),n=new RegExp("^#?[a-f\\d]{3}[a-f\\d]?$|^#?[a-f\\d]{6}([a-f\\d]{2})?$","i"),t=new RegExp(/^#([a-f0-9]{3,4}|[a-f0-9]{4}(?:[a-f0-9]{2}){1,2})\b$/,"i"),a="-?\\d*(?:\\.\\d+)",i="("+a+"?)",o="("+a+"?%)",s=("^\n  hsla?\\(\n    \\s*(-?\\d*(?:\\.\\d+)?(?:deg|rad|turn)?)\\s*,\n    \\s*"+o+"\\s*,\n    \\s*"+o+"\\s*\n    (?:,\\s*(-?\\d*(?:\\.\\d+)?%?)\\s*)?\n  \\)\n  $\n").replace(/\n|\s/g,""),l=new RegExp(s),u=("^\n  hsla?\\(\n    \\s*(-?\\d*(?:\\.\\d+)?(?:deg|rad|turn)?)\\s*\n    \\s+"+o+"\n    \\s+"+o+"\n    \\s*(?:\\s*\\/\\s*(-?\\d*(?:\\.\\d+)?%?)\\s*)?\n  \\)\n  $\n").replace(/\n|\s/g,""),h=new RegExp(u),d=("^\n  rgba?\\(\n    \\s*"+i+"\\s*,\n    \\s*"+i+"\\s*,\n    \\s*"+i+"\\s*\n    (?:,\\s*(-?\\d*(?:\\.\\d+)?%?)\\s*)?\n  \\)\n  $\n").replace(/\n|\s/g,""),g=new RegExp(d),p=("^\n  rgba?\\(\n    \\s*"+o+"\\s*,\n    \\s*"+o+"\\s*,\n    \\s*"+o+"\\s*\n    (?:,\\s*(-?\\d*(?:\\.\\d+)?%?)\\s*)?\n  \\)\n  $\n").replace(/\n|\s/g,""),c=new RegExp(p),f=("^\n  rgba?\\(\n    \\s*"+i+"\n    \\s+"+i+"\n    \\s+"+i+"\n    \\s*(?:\\s*\\/\\s*(-?\\d*(?:\\.\\d+)?%?)\\s*)?\n  \\)\n$\n").replace(/\n|\s/g,""),v=new RegExp(f),b=("^\n  rgba?\\(\n    \\s*"+o+"\n    \\s+"+o+"\n    \\s+"+o+"\n    \\s*(?:\\s*\\/\\s*(-?\\d*(?:\\.\\d+)?%?)\\s*)?\n  \\)\n$\n").replace(/\n|\s/g,""),m=new RegExp(b),y=new RegExp(/^transparent$/,"i"),w=function(e,r,n){return Math.min(Math.max(r,e),n)},k=function(e){var r=e;return"number"!=typeof r&&(r=r.endsWith("%")?255*parseFloat(r)/100:parseFloat(r)),w(Math.round(r),0,255)},x=function(e){return w(parseFloat(e),0,100)};function M(e){var r=e;return"number"!=typeof r&&(r=r.endsWith("%")?parseFloat(r)/100:parseFloat(r)),w(r,0,1)}function E(e){var t=function(e,t){if(void 0===t&&(t={}),"string"!=typeof e||r.test(e)||!n.test(e))throw new TypeError("Expected a valid hex string");var a=1;8===(e=e.replace(/^#/,"")).length&&(a=parseInt(e.slice(6,8),16)/255,e=e.slice(0,6)),4===e.length&&(a=parseInt(e.slice(3,4).repeat(2),16)/255,e=e.slice(0,3)),3===e.length&&(e=e[0]+e[0]+e[1]+e[1]+e[2]+e[2]);var i=parseInt(e,16),o=i>>16,s=i>>8&255,l=255&i;return"array"===t.format?[o,s,l,a]:{red:o,green:s,blue:l,alpha:a}}(e,{format:"array"});return F([null,t[0],t[1],t[2],t[3]])}function F(e){var r=e[1],n=e[2],t=e[3],a=e[4];return void 0===a&&(a=1),{type:"rgb",values:[r,n,t].map(k),alpha:M(null===a?1:a)}}
@@ -116,80 +214,76 @@ console.log('another')
 
 
 /***/ }),
-/* 2 */
+/* 3 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_values_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_values_js__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_values_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_values_js__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__another__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__displayItems__ = __webpack_require__(1);
 // 'use strict'
 
 
-console.log(__WEBPACK_IMPORTED_MODULE_1__another__["a" /* randomColor */])
-// const randomColor = [
-//   'Tomato',
-//   'Orange',
-//   'DodgerBlue',
-//   'MediumSeaGreen',
-//   'Gray',
-//   'SlateBlue',
-//   'Violet',
-//   'LightGray',
-//   'Crimson',
-//   'Chocolate',
-//   'Coral',
-//   'DarkRed',
-// ]
 
-const container = document.querySelector('.colorContainer')
-const btn = document.querySelector('.btnSubmit')
-const randomBtn = document.querySelector('.randomBtn')
-const spinner = document.querySelector('.spinner')
 
-const randomNumber = Math.floor(Math.random() * __WEBPACK_IMPORTED_MODULE_1__another__["a" /* randomColor */].length - 1)
+// Destructure Item of Dom Use
+const {
+  container,
+  submitBtn,
+  randomBtn,
+  spinner,
+  inputValue,
+  showCopyTo,
+} = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__another__["a" /* selectedItemsFromTheDom */])()
 
-const colorGen = (code = __WEBPACK_IMPORTED_MODULE_1__another__["a" /* randomColor */][randomNumber]) => {
+// ColorGen function for reusability purpose
+const colorGen = (code = __WEBPACK_IMPORTED_MODULE_1__another__["b" /* randomColor */][__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__another__["c" /* randomNumber */])()]) => {
   try {
     const color = new __WEBPACK_IMPORTED_MODULE_0_values_js___default.a(code).all(11)
+
+    // this return an array, so we use JOIN method in the displayColorToTheDom
     const html = color.map((el) => {
       const { rgb, hex, type } = el
-      return `<div class='hex' style='background-color:rgb(${rgb.join()})'>
-        <div class='time' style="color:${
-          type != 'tint' ? 'white' : 'black'
-        }">#${hex}</div>
-        </div>`
+      return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__displayItems__["a" /* domItems */])(rgb, hex, type)
     })
+
     container.innerHTML = null
     spinner.classList.remove('activeSpinner')
-    setTimeout(() => {
-      randomBtn.style.background = `${code}`
-      container.insertAdjacentHTML('beforeend', html.join(' '))
-      spinner.classList.add('activeSpinner')
-      document.querySelector('.inputValue').value = ''
-      randomBtn.disabled = false
-    }, 1500)
+
+    setTimeout(
+      // PASS VARIABLE TO BE USE BY THI FUNCTION ❗
+      __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__displayItems__["b" /* displayColorToTheDom */])(
+        code,
+        html,
+        randomBtn,
+        container,
+        spinner,
+        inputValue,
+        showCopyTo
+      ),
+      1500
+    )
   } catch (err) {
-    console.log(err.message)
+    console.log(err)
   }
 }
 
+// GENERATE A RANDOM COLOR
 randomBtn.addEventListener('click', () => {
-  const randomNumber = Math.floor(Math.random() * __WEBPACK_IMPORTED_MODULE_1__another__["a" /* randomColor */].length - 1)
-  colorGen(__WEBPACK_IMPORTED_MODULE_1__another__["a" /* randomColor */][randomNumber])
+  colorGen(__WEBPACK_IMPORTED_MODULE_1__another__["b" /* randomColor */][__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__another__["c" /* randomNumber */])()])
   randomBtn.disabled = true
 })
 
-btn.addEventListener('click', (e) => {
+// SUBMIT TEXT INPUT TO VALUES.JS
+submitBtn.addEventListener('click', (e) => {
   e.preventDefault()
-  const val = document.querySelector('.inputValue').value
+  const val = inputValue.value
   if (val) return colorGen(val)
   return alert('please enter a valid color code or name')
 })
 colorGen()
-
-// window.addEventListener('click', (e) => {})
 
 
 /***/ })

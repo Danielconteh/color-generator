@@ -1,66 +1,61 @@
 // 'use strict'
 import Values from 'values.js'
-import { randomColor } from './another'
-console.log(randomColor)
-// const randomColor = [
-//   'Tomato',
-//   'Orange',
-//   'DodgerBlue',
-//   'MediumSeaGreen',
-//   'Gray',
-//   'SlateBlue',
-//   'Violet',
-//   'LightGray',
-//   'Crimson',
-//   'Chocolate',
-//   'Coral',
-//   'DarkRed',
-// ]
+import { randomColor, randomNumber, selectedItemsFromTheDom } from './another'
+import { displayColorToTheDom, domItems } from './displayItems'
 
-const container = document.querySelector('.colorContainer')
-const btn = document.querySelector('.btnSubmit')
-const randomBtn = document.querySelector('.randomBtn')
-const spinner = document.querySelector('.spinner')
+// Destructure Item of Dom Use
+const {
+  container,
+  submitBtn,
+  randomBtn,
+  spinner,
+  inputValue,
+  showCopyTo,
+} = selectedItemsFromTheDom()
 
-const randomNumber = Math.floor(Math.random() * randomColor.length - 1)
-
-const colorGen = (code = randomColor[randomNumber]) => {
+// ColorGen function for reusability purpose
+const colorGen = (code = randomColor[randomNumber()]) => {
   try {
     const color = new Values(code).all(11)
+
+    // this return an array, so we use JOIN method in the displayColorToTheDom
     const html = color.map((el) => {
       const { rgb, hex, type } = el
-      return `<div class='hex' style='background-color:rgb(${rgb.join()})'>
-        <div class='time' style="color:${
-          type != 'tint' ? 'white' : 'black'
-        }">#${hex}</div>
-        </div>`
+      return domItems(rgb, hex, type)
     })
+
     container.innerHTML = null
     spinner.classList.remove('activeSpinner')
-    setTimeout(() => {
-      randomBtn.style.background = `${code}`
-      container.insertAdjacentHTML('beforeend', html.join(' '))
-      spinner.classList.add('activeSpinner')
-      document.querySelector('.inputValue').value = ''
-      randomBtn.disabled = false
-    }, 1500)
+
+    setTimeout(
+      // PASS VARIABLE TO BE USE BY THI FUNCTION ❗
+      displayColorToTheDom(
+        code,
+        html,
+        randomBtn,
+        container,
+        spinner,
+        inputValue,
+        showCopyTo
+      ),
+      1500
+    )
   } catch (err) {
-    console.log(err.message)
+    console.log(err)
   }
 }
 
+// GENERATE A RANDOM COLOR
 randomBtn.addEventListener('click', () => {
-  const randomNumber = Math.floor(Math.random() * randomColor.length - 1)
-  colorGen(randomColor[randomNumber])
+  colorGen(randomColor[randomNumber()])
   randomBtn.disabled = true
 })
 
-btn.addEventListener('click', (e) => {
+// SUBMIT TEXT INPUT TO VALUES.JS
+submitBtn.addEventListener('click', (e) => {
   e.preventDefault()
-  const val = document.querySelector('.inputValue').value
+  const val = inputValue.value
   if (val) return colorGen(val)
   return alert('please enter a valid color code or name')
 })
 colorGen()
-
-// window.addEventListener('click', (e) => {})
