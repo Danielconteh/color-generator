@@ -5,4 +5,4 @@ build by Danico
 
 ### click on the link
 
-[https://color-generator-project-1.netlify.app/]
+[color-generator-project-1](https://color-generator-project-1.netlify.app/)
