@@ -181,7 +181,7 @@ function displayColorToTheDom(
         showCopyTo.classList.add('show')
         setTimeout(() => {
           showCopyTo.classList.remove('show')
-        }, 1500)
+        }, 500)
       })
     })
   }
