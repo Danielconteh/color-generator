@@ -43,6 +43,7 @@ input[type='text'] {
   letter-spacing: 3px;
   color: inherit;
   outline: none;
+  appearance: none;
 }
 .randomBtn {
   display: block;

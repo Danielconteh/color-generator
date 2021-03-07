@@ -16,8 +16,7 @@ const {
 // ColorGen function for reusability purpose
 const colorGen = (code = randomColor[randomNumber()]) => {
   try {
-    const color = new Values(code).all(11)
-
+    const color = new Values(code).all(11).slice(0, 16)
     // this return an array, so we use JOIN method in the displayColorToTheDom
     const html = color.map((el) => {
       const { rgb, hex, type } = el
@@ -41,7 +40,7 @@ const colorGen = (code = randomColor[randomNumber()]) => {
       1500
     )
   } catch (err) {
-    console.log(err)
+    alert(`incorrect color ${err.message.split(' ')[6]}`)
   }
 }
 

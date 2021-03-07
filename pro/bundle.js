@@ -241,7 +241,9 @@ const {
 // ColorGen function for reusability purpose
 const colorGen = (code = __WEBPACK_IMPORTED_MODULE_1__another__["b" /* randomColor */][__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__another__["c" /* randomNumber */])()]) => {
   try {
-    const color = new __WEBPACK_IMPORTED_MODULE_0_values_js___default.a(code).all(11)
+    const color = new __WEBPACK_IMPORTED_MODULE_0_values_js___default.a(code).all(11).slice(0, 16)
+
+    console.log(color)
 
     // this return an array, so we use JOIN method in the displayColorToTheDom
     const html = color.map((el) => {
@@ -266,7 +268,7 @@ const colorGen = (code = __WEBPACK_IMPORTED_MODULE_1__another__["b" /* randomCol
       1500
     )
   } catch (err) {
-    console.log(err)
+    alert(`incorrect color ${err.message.split(' ')[6]}`)
   }
 }
 
